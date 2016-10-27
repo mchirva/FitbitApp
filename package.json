@@ -1,0 +1,10 @@
+{
+  "name": "fitbitapp",
+  "main": "Survey.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "bookshelf": "^0.10.2",
+    "express": "^4.14.0",
+    "passport-fitbit-oauth2": "^1.0.2"
+  }
+}
