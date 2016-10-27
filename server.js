@@ -25,7 +25,7 @@ app.get('/auth/fitbit',
     passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
     ));
 
-app.get( '/auth/fitbit/callback?code=:code', passport.authenticate( 'fitbit', {
+app.get( '/auth/fitbit/callback?code=', passport.authenticate( 'fitbit', {
     failureRedirect: '/auth/fitbit/failure'
 }), function(req, res) {
     console.log(req);
