@@ -30,11 +30,11 @@ app.get('/auth/fitbit',
     ));
 
 app.get( '/auth/fitbit/callback', function(req, user, res) {
-    request('https://api.fitbit.com/1/user/'+profileId+'/activities/date/2016-01-26.json', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            res.render('activity', {error: false, body: body});
-        }
-    })
+    // request('https://api.fitbit.com/1/user/'+profileId+'/activities/date/2016-01-26.json', function (error, response, body) {
+    //     if (!error && response.statusCode == 200) {
+    //         res.render('activity', {error: false, body: body});
+    //     }
+    // })
 });
 
 app.listen(8080, function() {
