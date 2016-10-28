@@ -19,19 +19,19 @@ passport.use(new FitbitStrategy({
         callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('yes');
         token = accessToken;
         profileId = profile.id;
-        return done(req, user);
+        //return done(req, user);
     }
 ));
 
 app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
     ));
 
-app.get( '/auth/fitbit/callback', function(req, user, res) {
+app.get( '/auth/fitbit/callback', function(user, res) {
     request('https://api.fitbit.com/1/user/'+profileId+'/activities/date/2016-01-26.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
+            console.log(token, profileId);
             res.render('activity', {error: false, body: body});
         }
     })
