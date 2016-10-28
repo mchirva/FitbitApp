@@ -18,7 +18,7 @@ passport.use(new FitbitStrategy({
         console.log(profile);
         console.log(accessToken);
         console.log(refreshToken);
-        return done(err, user);
+        //return done(err, user);
     }
 ));
 
