@@ -29,6 +29,7 @@ app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','he
     ));
 
 app.get( '/auth/fitbit/callback', function(user, res) {
+    console.log('Callback');
     request('https://api.fitbit.com/1/user/'+profileId+'/activities/date/2016-01-26.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(token, profileId);
