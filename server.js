@@ -15,7 +15,7 @@ passport.use(new FitbitStrategy({
         callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log('@@@@@',profile);
+        console.log('@@@@@###',profile);
         console.log(accessToken);
         console.log(refreshToken);
         //return done(err, user);
