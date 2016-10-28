@@ -18,9 +18,7 @@ passport.use(new FitbitStrategy({
         console.log(profile);
         console.log(accessToken);
         console.log(refreshToken);
-        //User.findOrCreate({ fitbitId: profile.id }, function (err, user) {
-        //    return done(err, user);
-        //});
+        return done(err, user);
     }
 ));
 
@@ -28,12 +26,12 @@ app.get('/auth/fitbit',
     passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
     ));
 
-app.get( '/auth/fitbit/callback', passport.authenticate( 'fitbit', {
-    failureRedirect: '/auth/fitbit/failure'
-}), function(req, res) {
-    console.log(req);
-    res.redirect('/app.html');
-});
+// app.get( '/auth/fitbit/callback', passport.authenticate( 'fitbit', {
+//     failureRedirect: '/auth/fitbit/failure'
+// }), function(req, res) {
+//     console.log(req);
+//     res.redirect('/app.html');
+// });
 
 app.listen(8080, function() {
     console.log("✔ Express server listening on port %d in %s mode", 8080, app.get('env'));
