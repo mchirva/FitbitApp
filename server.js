@@ -14,11 +14,8 @@ passport.use(new FitbitStrategy({
         clientSecret: FITBIT_CLIENT_SECRET,
         callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
     },
-    function(accessToken, refreshToken, profile, done) {
-        console.log('@@@@@###',profile);
-        console.log(accessToken);
-        console.log(refreshToken);
-        //return done(err, user);
+    function(req, accessToken, refreshToken, profile, done) {
+        return done(req, user);
     }
 ));
 
@@ -26,7 +23,7 @@ app.get('/auth/fitbit',
     passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
     ));
 
-app.get( '/auth/fitbit/callback', function(req, res) {
+app.get( '/auth/fitbit/callback', function(req, user, res) {
     console.log('####',req);
     // res.redirect('/app.html');
 });
