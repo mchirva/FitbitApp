@@ -26,10 +26,8 @@ app.get('/auth/fitbit',
     passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
     ));
 
-app.get( '/auth/fitbit/callback', passport.authenticate( 'fitbit', {
-    failureRedirect: '/auth/fitbit/failure'
-}), function(req, res) {
-    // console.log(req);
+app.get( '/auth/fitbit/callback', function(req, res) {
+    console.log('####',req);
     // res.redirect('/app.html');
 });
 
