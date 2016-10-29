@@ -43,12 +43,13 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
     };
     request(options)
         .then( function (response) {
+            console.log(response);
             if (!error && response.statusCode == 200) {
-                console.log(response);
+
                 response.render('activity', {error: false, body: response});
             }
             else {
-                console.log('Error-' + error);
+                //console.log('Error-' + error);
             }
         })
         .catch( function (error) {
