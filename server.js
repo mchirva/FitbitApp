@@ -44,7 +44,6 @@ app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','he
 // });
 
 app.get( '/auth/fitbit/callback', function(req, res) {
-    console.log('req-'+req);
     var bearer = 'Bearer '+token
     var options = {
         method: 'GET',
@@ -53,9 +52,10 @@ app.get( '/auth/fitbit/callback', function(req, res) {
             'Authorization': bearer
         }
     };
+    console.log(bearer);
     request(options)
         .then( function (response) {
-            console.log(response);
+            console.log('In response');
             //if (response.statusCode == 200) {
                 response.render('activity', {error: false, body: response});
             // }
