@@ -30,19 +30,6 @@ passport.use(new FitbitStrategy({
 
 app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }));
 
-// app.get( '/auth/fitbit/callback', passport.authenticate( 'fitbit', {
-//     successRedirect: '/auth/fitbit/success',
-//     failureRedirect: '/auth/fitbit/failure'
-// }));
-
-// app.get('/auth/fitbit/success', function (req, res) {
-//     console.log('Callback');
-// });
-//
-// app.get('/auth/fitbit/failure', function (req, res) {
-//     console.log('Callback failure');
-// });
-
 app.get( '/auth/fitbit/callback', function(req, res) {
     var bearer = 'Bearer '+token
     var options = {
@@ -56,12 +43,7 @@ app.get( '/auth/fitbit/callback', function(req, res) {
     request(options)
         .then( function (response) {
             console.log('In response');
-            //if (response.statusCode == 200) {
-                response.render('activity', {error: false, body: response});
-            // }
-            // else {
-            //     //console.log('Error-' + error);
-            // }
+            response.render('activity', {error: false, body: response});
         })
         .catch( function (error) {
             console.log(error);
