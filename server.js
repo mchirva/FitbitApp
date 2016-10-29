@@ -43,13 +43,18 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(response);
-            response.render('activity', {error: false, body: body});
+            response.redirect('/auth/render');
         }
         else {
             console.log('Error-'+error);
         }
     })
 }));
+
+app.get('/auth/render', function (req, res) {
+    console.log(req, res);
+    //res.render('activity', {error: false, body: body});
+});
 
 app.listen(8080, function() {
     console.log("✔ Express server listening on port %d in %s mode", 8080, app.get('env'));
