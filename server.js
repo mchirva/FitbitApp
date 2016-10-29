@@ -41,7 +41,7 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log('Yay!!');
-            res.render('activity', {error: false, body: body});
+            response.render('activity', {error: false, body: body});
         }
         else {
             console.log('Error-'+error);
