@@ -28,7 +28,7 @@ passport.use(new FitbitStrategy({
 app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
     ));
 
-app.get( '/auth/fitbit/callback', passport.authenticate('fitbit',function(req, user, res) {
+app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, user, res) {
     console.log('Callback');
     console.log('token-'+req.query.code, user);
     var options = {
@@ -43,7 +43,7 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit',function(req, u
             res.render('activity', {error: false, body: body});
         }
     })
-});
+}));
 
 app.listen(8080, function() {
     console.log("✔ Express server listening on port %d in %s mode", 8080, app.get('env'));
