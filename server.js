@@ -21,6 +21,7 @@ passport.use(new FitbitStrategy({
     function(accessToken, refreshToken, profile, done) {
         token = accessToken;
         profileId = profile.id;
+        console.log('token-'+token);
         //return done(req, user);
     }
 ));
@@ -43,7 +44,7 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
             res.render('activity', {error: false, body: body});
         }
         else {
-            console.log(error);
+            console.log('Error-'+error);
         }
     })
 }));
