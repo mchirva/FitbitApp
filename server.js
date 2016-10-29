@@ -30,7 +30,7 @@ app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','he
 
 app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, user, res) {
     console.log('Callback');
-    console.log('token-'+req.query.code, user);
+    console.log('token-'+req.query.code);
     var options = {
         url: 'https://api.fitbit.com/1/user/-/activities/date/2016-01-26.json',
         headers: {
@@ -41,6 +41,9 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
         if (!error && response.statusCode == 200) {
             console.log('Yay!!');
             res.render('activity', {error: false, body: body});
+        }
+        else {
+            console.log(error);
         }
     })
 }));
