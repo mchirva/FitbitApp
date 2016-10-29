@@ -35,7 +35,7 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
     var options = {
         url: 'https://api.fitbit.com/1/user/-/activities/date/2016-01-26.json',
         headers: {
-            'Authorization': 'Bearer '+req.query.code
+            'Authorization': 'Bearer '+token
         }
     };
     request(options, function (error, response, body) {
