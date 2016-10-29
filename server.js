@@ -13,6 +13,8 @@ var router = express.Router();
 var token = '';
 var profileId = '';
 
+app.set('view engine', 'ejs');
+
 passport.use(new FitbitStrategy({
         clientID:     FITBIT_CLIENT_ID,
         clientSecret: FITBIT_CLIENT_SECRET,
