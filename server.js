@@ -28,9 +28,9 @@ passport.use(new FitbitStrategy({
     }
 ));
 
-app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }));
+router.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }));
 
-app.get( '/auth/fitbit/callback', function(req, res) {
+router.get( '/auth/fitbit/callback', function(req, res) {
     var bearer = 'Bearer '+token
     var options = {
         method: 'GET',
