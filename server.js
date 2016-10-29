@@ -43,7 +43,7 @@ app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','he
 //     console.log('Callback failure');
 // });
 
-app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, res) {
+app.get( '/auth/fitbit/callback', function(req, res) {
     console.log('req-'+req);
     var bearer = 'Bearer '+token
     var options = {
@@ -66,7 +66,7 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, 
         .catch( function (error) {
             console.log(error);
         });
-}));
+});
 
 app.listen(8080, function() {
     console.log("✔ Express server listening on port %d in %s mode", 8080, app.get('env'));
