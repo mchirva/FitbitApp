@@ -31,7 +31,7 @@ passport.use(new FitbitStrategy({
 app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }));
 
 app.get( '/auth/fitbit/callback', function(req, res) {
-    var bearer = 'Bearer '+token
+    var bearer = 'Bearer '+token;
     var options = {
         method: 'GET',
         url: 'https://api.fitbit.com/1/user/-/activities/date/2016-01-26.json',
