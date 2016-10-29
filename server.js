@@ -28,34 +28,45 @@ passport.use(new FitbitStrategy({
     }
 ));
 
-app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }
-    ));
+app.get('/auth/fitbit', passport.authenticate('fitbit', { scope: ['activity','heartrate','location','profile'] }));
 
-app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, res) {
-    console.log('Callback');
-    console.log('token 2-'+token);
-    var bearer = 'Bearer '+token
-    var options = {
-        method: 'GET',
-        url: 'https://api.fitbit.com/1/user/-/activities/date/2016-01-26.json',
-        headers: {
-            'Authorization': bearer
-        }
-    };
-    request(options)
-        .then( function (response) {
-            console.log(response);
-            //if (response.statusCode == 200) {
-                response.render('activity', {error: false, body: response});
-            // }
-            // else {
-            //     //console.log('Error-' + error);
-            // }
-        })
-        .catch( function (error) {
-            console.log(error);
-        });
+app.get( '/auth/fitbit/callback', passport.authenticate( 'fitbit', {
+    successRedirect: '/auth/fitbit/success',
+    failureRedirect: '/auth/fitbit/failure'
 }));
+
+app.get('/auth/fitbit/success', function (req, res) {
+    console.log('Callback');
+});
+
+app.get('/auth/fitbit/failure', function (req, res) {
+    console.log('Callback failure');
+});
+
+// app.get( '/auth/fitbit/callback', passport.authenticate('fitbit', function(req, res) {
+//     console.log('token 2-'+token);
+//     var bearer = 'Bearer '+token
+//     var options = {
+//         method: 'GET',
+//         url: 'https://api.fitbit.com/1/user/-/activities/date/2016-01-26.json',
+//         headers: {
+//             'Authorization': bearer
+//         }
+//     };
+//     request(options)
+//         .then( function (response) {
+//             console.log(response);
+//             //if (response.statusCode == 200) {
+//                 response.render('activity', {error: false, body: response});
+//             // }
+//             // else {
+//             //     //console.log('Error-' + error);
+//             // }
+//         })
+//         .catch( function (error) {
+//             console.log(error);
+//         });
+// }));
 
 app.listen(8080, function() {
     console.log("✔ Express server listening on port %d in %s mode", 8080, app.get('env'));
