@@ -50,7 +50,7 @@ app.get( '/auth/fitbit/callback', passport.authenticate('fitbit'),
         var bearer = 'Bearer '+ req.user.token;
         var options = {
             method: 'GET',
-            url: 'https://api.fitbit.com/1/user/'+req.user.profile.id+'/activities/date/2016-01-26.json',
+            url: 'https://api.fitbit.com/1/user/'+req.user.profile.Id+'/activities/heart/date/today/1d.json',
             headers: {
                 'Authorization': bearer
             }
