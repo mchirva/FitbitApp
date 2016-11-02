@@ -2,16 +2,18 @@ var FitbitStrategy = require( 'passport-fitbit-oauth2' ).FitbitOAuth2Strategy;
 var passport = require('passport');
 var express = require('express');
 var request = require('request-promise');
+var plotly = require('plotly')('fitbit','6mcgrwqpjf');
+var fs = require('fs');
 
 var app = express();
 
 //AWS
-var FITBIT_CLIENT_ID = "227WYF";
-var FITBIT_CLIENT_SECRET = "28e96c62a095734ac15d667c085ce2dc";
+// var FITBIT_CLIENT_ID = "227WYF";
+// var FITBIT_CLIENT_SECRET = "28e96c62a095734ac15d667c085ce2dc";
 
 //local
-// var FITBIT_CLIENT_ID = "227WM4";
-// var FITBIT_CLIENT_SECRET = "f4111700b64948de968dd79be0a175ba";
+var FITBIT_CLIENT_ID = "227WM4";
+var FITBIT_CLIENT_SECRET = "f4111700b64948de968dd79be0a175ba";
 
 var router = express.Router();
 
@@ -35,8 +37,8 @@ passport.deserializeUser(function(user, done) {
 passport.use(new FitbitStrategy({
         clientID:     FITBIT_CLIENT_ID,
         clientSecret: FITBIT_CLIENT_SECRET,
-        callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
-        //callbackURL: "http://localhost:8080/auth/fitbit/callback"
+        // callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
+        callbackURL: "http://localhost:8080/auth/fitbit/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
@@ -66,11 +68,38 @@ app.get('/heartRate', function (req, res) {
     };
     request(options)
         .then( function (response) {
-            console.log(response["activities-heart"]);
-            res.render('activity', {response: response});
+            var responseJSON = JSON.parse(response);
+            
+            var heartRateZonesArray = responseJSON["activities-heart"][0].value.heartRateZones;
+
+            //plotting the graph
+            var minimum = {
+                x: [heartRateZonesArray[0].name, heartRateZonesArray[1].name, heartRateZonesArray[2].name, heartRateZonesArray[3].name],
+                y: [heartRateZonesArray[0].min, heartRateZonesArray[1].min, heartRateZonesArray[2].min, heartRateZonesArray[3].min],
+                name: "Minimum",
+                type: "bar"
+            };
+            var maximum = {
+                x: [heartRateZonesArray[0].name, heartRateZonesArray[1].name, heartRateZonesArray[2].name, heartRateZonesArray[3].name],
+                y: [heartRateZonesArray[0].max, heartRateZonesArray[1].max, heartRateZonesArray[2].max, heartRateZonesArray[3].max],
+                name: "Minimum",
+                type: "bar"
+            };
+            
+            var data = [minimum, maximum];
+            var layout = {barmode: "group"};
+            var graphOptions = {layout: layout, filename: "heartRate-bar", fileopt: "overwrite"};
+            plotly.plot(data, graphOptions, function (err, msg) {
+                if(!err) {
+                    console.log(msg);
+                    res.render('activity', {page: "heartRate", response: heartRateZonesArray});
+                }
+                else console.log(err);
+            });
         })
         .catch( function (error) {
-            //console.log(error);
+            console.log(error);
+            res.redirect('/');            
         });
 });
 
@@ -90,10 +119,25 @@ app.get('/steps', function (req, res){
     };
     request(options)
         .then( function (response) {
-            res.render('activity', {response: response});
+            var responseJSON = JSON.parse(response);
+            console.log(responseJSON.goals);
+            var data = [{
+                            x: ["goal", "activity"],
+                            y: [responseJSON.goals.steps, responseJSON.summary.steps],
+                            type: "bar"
+                        }];
+            var graphOptions = {filename: "steps-bar", fileopt: "overwrite"};
+            plotly.plot(data, graphOptions, function (err, msg) {
+                if(!err) {
+                    console.log(msg);
+                    res.render('activity', {page: "steps", response: responseJSON});
+                }
+                else console.log(err);
+            });            
         })
         .catch( function (error) {
-            //console.log(error);
+            console.log(error);
+            res.redirect('/');
         });
 });
 

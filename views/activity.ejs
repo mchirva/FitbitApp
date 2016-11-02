@@ -26,10 +26,59 @@
         </div>
     </form>
     <br>
-    <div class="maxChart" style="float: left; width: 40%">
-        <h2>Activity</h2>
-        <p><%= response%></p>
-    </div>
+    <% if (page == "steps") { %>
+        <div>
+            <img src="https://plot.ly/~fitbit/2.png" alt="" style="max-width: 100%;width: 3600px;"  width="3600" height="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+            <script data-plotly="fitbit:2"  src="https://plot.ly/embed.js" async></script>
+        </div>
+
+
+        <table id="stepsTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>     
+                <th>Goal</th>
+                <th>Actual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= response.goals.steps %></td>
+                <td><%= response.summary.steps %></td>
+            </tr>
+        </tbody>
+        </table>
+    <% }else { %>
+        <div>
+            <img src="https://plot.ly/~fitbit/0.png" alt="Minimum vs Minimum" style="max-width: 100%;width: 5000px;"  width="5000" height="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+            <script data-plotly="fitbit:0"  src="https://plot.ly/embed.js" async></script>
+        </div>
+
+
+        <table id="heartRateTable" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>     
+                <th></th>       
+                <% for(var i=0; i<response.length; i++) {%>
+                    <th><%= response[i].name %></th>
+                <% } %> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Minimum</td>
+                <% for(var i=0; i<response.length; i++) {%>
+                    <td><%= response[i].min %></td>
+                <% } %>
+            </tr>
+            <tr>
+                <td>Maximum</td>
+                <% for(var i=0; i<response.length; i++) {%>
+                    <td><%= response[i].max %></td>
+                <% } %>
+            </tr>
+        </tbody>
+        </table>
+    <% } %>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
