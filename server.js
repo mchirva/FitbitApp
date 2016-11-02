@@ -8,12 +8,12 @@ var fs = require('fs');
 var app = express();
 
 //AWS
-// var FITBIT_CLIENT_ID = "227WYF";
-// var FITBIT_CLIENT_SECRET = "28e96c62a095734ac15d667c085ce2dc";
+var FITBIT_CLIENT_ID = "227WYF";
+var FITBIT_CLIENT_SECRET = "28e96c62a095734ac15d667c085ce2dc";
 
 //local
-var FITBIT_CLIENT_ID = "227WM4";
-var FITBIT_CLIENT_SECRET = "f4111700b64948de968dd79be0a175ba";
+// var FITBIT_CLIENT_ID = "227WM4";
+// var FITBIT_CLIENT_SECRET = "f4111700b64948de968dd79be0a175ba";
 
 var router = express.Router();
 
@@ -37,8 +37,8 @@ passport.deserializeUser(function(user, done) {
 passport.use(new FitbitStrategy({
         clientID:     FITBIT_CLIENT_ID,
         clientSecret: FITBIT_CLIENT_SECRET,
-        // callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
-        callbackURL: "http://localhost:8080/auth/fitbit/callback"
+        callbackURL: "http://52.89.68.106:8080/auth/fitbit/callback"
+        // callbackURL: "http://localhost:8080/auth/fitbit/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
