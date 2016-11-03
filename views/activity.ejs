@@ -8,23 +8,31 @@
 </head>
 <body>
 <div class="container">
-    <form action="/logout" method="GET" class="form-inline">
-        <div class="form-group" style="float: right;width: 4%;padding: 5px">
-            <button type="submit" class="btn btn-default">Logout</button>
-        </div>
-    </form>
-
-    <form action="/steps" method="GET" class="form-inline">
-        <div class="form-group" style="float: left;margin: 40px; width: 4%;padding: 5px">
-            <button type="submit" class="btn btn-default">View Steps</button>
-        </div>
-    </form>
-
-    <form action="/heartRate" method="GET" class="form-inline">
-        <div class="form-group" style="float: center;width: 4%;padding: 5px">
-            <button type="submit" class="btn btn-default">View Heart Rate</button>
-        </div>
-    </form>
+    <table>
+        <thead>
+            <th style="padding: 30px 50px 20px 0">
+                <form action="/heartRate" method="GET" class="form-inline">
+                    <div class="form-group" style="width: 4%;padding: 5px">
+                        <button type="submit" class="btn btn-default">View Heart Rate</button>
+                    </div>
+                </form>
+            </th>
+            <th style="padding: 30px 0 20px 0">
+            <form action="/steps" method="GET" class="form-inline">
+                <div class="form-group" style="width: 4%;padding: 5px">
+                    <button type="submit" class="btn btn-default">View Steps</button>
+                </div>
+            </form>
+            </th>
+            <th style="padding: 30px 0 20px 680px">
+            <form action="/logout" method="GET" class="form-inline">
+                <div class="form-group" style="; width: 4%;padding: 5px">
+                    <button type="submit" class="btn btn-default">Logout</button>
+                </div>
+            </form>
+            </th>
+        </thead>
+    </table>
     <br>
     <% if (page == "steps") { %>
         <div>
