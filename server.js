@@ -120,7 +120,7 @@ app.get('/steps', function (req, res){
         var bearer = 'Bearer ' + tokenId;
         var options = {
             method: 'GET',
-            url: 'https://api.fitbit.com/1/user/' + profileId + '/activities/date/2016-10-29.json',
+            url: 'https://api.fitbit.com/1/user/' + profileId + '/activities/date/2016-01-29.json',
             headers: {
                 'Authorization': bearer
             }
